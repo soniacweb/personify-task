@@ -1,6 +1,6 @@
 var getJSON = function (url, callback) {
   var apiJSON = JSON.stringify({
-    pagesize: 3,
+    pagesize: 5,
     bundleqty: 0,
     category: document
       .querySelector(".pdpForm")
@@ -44,47 +44,53 @@ getJSON(
     console.log("url", window.location.href);
 
     if (response.recommendations.length > 0) {
-      htmlText =
-        "<div id='more-from-collection-title-wrapper'><h2>YOU MIGHT ALSO LIKE</h2></div>";
-      htmlText +=
-        "<div id='more-from-collection-content-wrapper' class='more-from-collection-collapse'>" +
-        "<a href='#' class='jcarousel-next inactive' data-jcarouselcontrol='true'></a>" +
-        "<a href='#' class='jcarousel-prev inactive' data-jcarouselcontrol='true'></a>" +
-        "<div class='jcarousel' data-jcarousel='true'>" +
-        "<ul id='last-visited-horizontal-carousel' style='left: 0px; top: 0px;'>";
       for (var i = 0; i < response.recommendations.length; i++) {
         response.recommendations[i].image = response.recommendations[
           i
         ].image.replace("//on", "/on");
-        htmlText +=
-          "<li>" +
-          "<div class='product-tile' id='f2126bdf80e2dcfdb9c8454bf6' data-itemid='" +
-          response.recommendations[i].productcode +
-          "'>	" +
-          "<div class='product-image'>" +
-          "<a class='thumb-link producttile-tooltip' href='" +
-          response.recommendations[i].link +
-          "'>" +
-          "<img src='" +
-          response.recommendations[i].image +
-          "' alt='" +
-          response.recommendations[i].name +
-          "' title='" +
-          response.recommendations[i].name +
-          "'>" +
-          "<div class='tooltip-content' data-layout='product-tooltip'>" +
-          "<div class='product-name'>" +
-          response.recommendations[i].name +
-          "</div>" +
-          "</div>" +
-          "</a>" +
-          "</div>" +
-          "</div>" +
-          "</li>";
-        console.log("htmlText", htmlText);
+
+        const h2 = (document
+          .querySelector("#item_page_main")
+          .getElementsByTagName("h2")[0].innerText = "YOU MIGHT ALSO LIKE");
+
+        console.log(h2);
+
+        const imglink = (document
+          .querySelector("#item_page_main")
+          .querySelector(".you-may-also-like-item").href =
+          response.recommendations[i].link);
+
+        console.log(i, "imglinks", imglink);
+
+        const imgSrc = (document
+          .querySelector(".you-may-also-like-item")
+          .getElementsByTagName("img").src = response.recommendations[i].image);
+
+        console.log(i, "imageSrc", imgSrc);
+
+        const imgAlt = (document
+          .querySelector(".you-may-also-like-item")
+          .getElementsByTagName("img").src = response.recommendations[i].name);
+
+        console.log(i, "image alt", imgAlt);
+
+        const imgTitle = (document
+          .querySelector(".you-may-also-like-item")
+          .getElementsByTagName("img").src = response.recommendations[i].name);
+        console.log(i, "image title", imgTitle);
+
+        const h3 = (document
+          .querySelector(".you-may-also-like-item")
+          .getElementsByTagName("h3")[0].innerText =
+          response.recommendations[i].name);
+        console.log(i, "h3", h3);
+
+        const price = (document
+          .querySelector(".you-may-also-like-item")
+          .getElementsByTagName("span")[0].innerText =
+          response.recommendations[i].price);
+        console.log(i, "price", price);
       }
-      htmlText += "</ul></div></div>";
-      document.querySelector("#more-from-collection").innerHTML = htmlText;
     }
   }
 );
